@@ -138,10 +138,6 @@ FILES	=	\
 		Makefile \
 		foo2zjs.c \
 		foo2zjs.1in \
-		jbig.c \
-		jbig.h \
-		jbig_ar.c \
-		jbig_ar.h \
 		zjsdecode.c \
 		zjsdecode.1in \
 		zjs.h \
@@ -306,7 +302,7 @@ MANPAGES+=	foo2ddst-wrapper.1 foo2ddst.1 ddstdecode.1
 MANPAGES+=	gipddecode.1
 MANPAGES+=	foo2zjs-pstops.1 arm2hpdl.1 usb_printerid.1
 MANPAGES+=	printer-profile.1
-LIBJBG	=	jbig.o jbig_ar.o
+LIBJBG	=	-ljbig
 BINPROGS=
 
 ifeq ($(UNAME),Linux)
@@ -494,34 +490,34 @@ all-done:
 	@echo "yourself."
 
 
-foo2ddst$(EXEEXT): foo2ddst.o $(LIBJBG)
+foo2ddst$(EXEEXT): foo2ddst.o
 	$(CC) $(CFLAGS) -o $@ foo2ddst.o $(LIBJBG)
 
-foo2hbpl2$(EXEEXT): foo2hbpl2.o $(LIBJBG)
+foo2hbpl2$(EXEEXT): foo2hbpl2.o
 	$(CC) $(CFLAGS) -o $@ foo2hbpl2.o $(LIBJBG)
 
-foo2hp$(EXEEXT): foo2hp.o $(LIBJBG)
+foo2hp$(EXEEXT): foo2hp.o
 	$(CC) $(CFLAGS) -o $@ foo2hp.o $(LIBJBG)
 
-foo2hiperc$(EXEEXT): foo2hiperc.o $(LIBJBG)
+foo2hiperc$(EXEEXT): foo2hiperc.o
 	$(CC) $(CFLAGS) -o $@ foo2hiperc.o $(LIBJBG)
 
-foo2lava$(EXEEXT): foo2lava.o $(LIBJBG)
+foo2lava$(EXEEXT): foo2lava.o
 	$(CC) $(CFLAGS) -o $@ foo2lava.o $(LIBJBG)
 
-foo2oak$(EXEEXT): foo2oak.o $(LIBJBG)
+foo2oak$(EXEEXT): foo2oak.o
 	$(CC) $(CFLAGS) -o $@ foo2oak.o $(LIBJBG)
 
-foo2qpdl$(EXEEXT): foo2qpdl.o $(LIBJBG)
+foo2qpdl$(EXEEXT): foo2qpdl.o
 	$(CC) $(CFLAGS) -o $@ foo2qpdl.o $(LIBJBG)
 
-foo2slx$(EXEEXT): foo2slx.o $(LIBJBG)
+foo2slx$(EXEEXT): foo2slx.o
 	$(CC) $(CFLAGS) -o $@ foo2slx.o $(LIBJBG)
 
-foo2xqx$(EXEEXT): foo2xqx.o $(LIBJBG)
+foo2xqx$(EXEEXT): foo2xqx.o
 	$(CC) $(CFLAGS) -o $@ foo2xqx.o $(LIBJBG)
 
-foo2zjs$(EXEEXT): foo2zjs.o $(LIBJBG)
+foo2zjs$(EXEEXT): foo2zjs.o
 	$(CC) $(CFLAGS) -o $@ foo2zjs.o $(LIBJBG)
 
 
@@ -607,43 +603,43 @@ ifeq ($(UNAME),Darwin)
 	cd osx-hotplug; $(MAKE) all
 endif
 
-ok: ok.o $(LIBJBG)
+ok: ok.o
 	$(CC) $(CFLAGS) ok.o $(LIBJBG) -o $@
 
-ddstdecode$(EXEEXT): ddstdecode.o $(LIBJBG)
+ddstdecode$(EXEEXT): ddstdecode.o
 	$(CC) $(CFLAGS) ddstdecode.o $(LIBJBG) -o $@
 
-gipddecode$(EXEEXT): gipddecode.o $(LIBJBG)
+gipddecode$(EXEEXT): gipddecode.o
 	$(CC) $(CFLAGS) gipddecode.o $(LIBJBG) -o $@
 
-hbpldecode$(EXEEXT): hbpldecode.o $(LIBJBG)
+hbpldecode$(EXEEXT): hbpldecode.o
 	$(CC) $(CFLAGS) hbpldecode.o $(LIBJBG) -o $@
 
-hipercdecode$(EXEEXT): hipercdecode.o $(LIBJBG)
+hipercdecode$(EXEEXT): hipercdecode.o
 	$(CC) $(CFLAGS) hipercdecode.o $(LIBJBG) -o $@
 
-lavadecode$(EXEEXT): lavadecode.o $(LIBJBG)
+lavadecode$(EXEEXT): lavadecode.o
 	$(CC) $(CFLAGS) lavadecode.o $(LIBJBG) -o $@
 
-oakdecode$(EXEEXT): oakdecode.o $(LIBJBG)
+oakdecode$(EXEEXT): oakdecode.o
 	$(CC) $(CFLAGS) -g oakdecode.o $(LIBJBG) -o $@
 
-opldecode$(EXEEXT): opldecode.o $(LIBJBG)
+opldecode$(EXEEXT): opldecode.o
 	$(CC) $(CFLAGS) -g opldecode.o $(LIBJBG) -o $@
 
-qpdldecode$(EXEEXT): qpdldecode.o $(LIBJBG)
+qpdldecode$(EXEEXT): qpdldecode.o
 	$(CC) $(CFLAGS) qpdldecode.o $(LIBJBG) -o $@
 
-splcdecode$(EXEEXT): splcdecode.o $(LIBJBG)
+splcdecode$(EXEEXT): splcdecode.o
 	$(CC) $(CFLAGS) splcdecode.o $(LIBJBG) -lz -o $@
 
-slxdecode$(EXEEXT): slxdecode.o $(LIBJBG)
+slxdecode$(EXEEXT): slxdecode.o
 	$(CC) $(CFLAGS) slxdecode.o $(LIBJBG) -o $@
 
-xqxdecode$(EXEEXT): xqxdecode.o $(LIBJBG)
+xqxdecode$(EXEEXT): xqxdecode.o
 	$(CC) $(CFLAGS) xqxdecode.o $(LIBJBG) -o $@
 
-zjsdecode$(EXEEXT): zjsdecode.o $(LIBJBG)
+zjsdecode$(EXEEXT): zjsdecode.o
 	$(CC) $(CFLAGS) zjsdecode.o $(LIBJBG) -o $@
 
 command2foo2lava-pjl$(EXEEXT): command2foo2lava-pjl.o
@@ -1270,7 +1266,7 @@ clean:
 	-rm -f $(PROGS) $(BINPROGS) $(SHELLS)
 	-rm -f *.zc *.zm *.zm1
 	-rm -f xxx.* xxxomatic
-	-rm -f foo2zjs.o jbig.o jbig_ar.o zjsdecode.o foo2hp.o
+	-rm -f foo2zjs.o zjsdecode.o foo2hp.o
 	-rm -f foo2oak.o oakdecode.o
 	-rm -f foo2xqx.o xqxdecode.o
 	-rm -f foo2lava.o lavadecode.o
@@ -1300,29 +1296,27 @@ clean:
 #
 # Header dependencies
 #
-jbig.o: jbig.h
+foo2ddst.o: ddst.h
+foo2hiperc.o: hiperc.h
+foo2hp.o: zjs.h cups.h
+foo2hbpl2.o: hbpl.h
+foo2lava.o:
+foo2oak.o: oak.h
+foo2qpdl.o: qpdl.h
+foo2slx.o: slx.h
+foo2xqx.o: xqx.h
+foo2zjs.o: zjs.h
 
-foo2ddst.o: jbig.h ddst.h
-foo2hiperc.o: jbig.h hiperc.h
-foo2hp.o: jbig.h zjs.h cups.h
-foo2hbpl2.o: jbig.h hbpl.h
-foo2lava.o: jbig.h
-foo2oak.o: jbig.h oak.h
-foo2qpdl.o: jbig.h qpdl.h
-foo2slx.o: jbig.h slx.h
-foo2xqx.o: jbig.h xqx.h
-foo2zjs.o: jbig.h zjs.h
-
-ddstdecode.o: ddst.h jbig.h
-gipddecode.o: slx.h jbig.h
-hbpldecode.o: jbig.h
-hipercdecode.o: hiperc.h jbig.h
-lavadecode.o: jbig.h
-opldecode.o: jbig.h
-qpdldecode.o: jbig.h
-slxdecode.o: slx.h jbig.h
-xqxdecode.o: xqx.h jbig.h
-zjsdecode.o: jbig.h zjs.h
+ddstdecode.o: ddst.h
+gipddecode.o: slx.h
+hbpldecode.o:
+hipercdecode.o: hiperc.h
+lavadecode.o:
+opldecode.o:
+qpdldecode.o:
+slxdecode.o: slx.h
+xqxdecode.o: xqx.h
+zjsdecode.o: zjs.h
 
 #
 # foo2* Regression tests
