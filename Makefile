@@ -35,7 +35,7 @@ SHAREHBPL=$(PREFIX)/share/foo2hbpl
 SHAREDDST=$(PREFIX)/share/foo2ddst
 MANDIR=$(PREFIX)/share/man
 DOCDIR=$(PREFIX)/share/doc/foo2zjs/
-INSTALL=install
+INSTALL=install$(EXEEXT)
 ROOT=root
 
 # Pathnames for referenced packages...
