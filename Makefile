@@ -42,13 +42,17 @@ DOCDIR=$(PREFIX)/share/doc/foo2zjs/
 INSTALL=install$(EXEEXT)
 ROOT=root
 
-# Pathnames for referenced packages...
-FOODB=$(DESTDIR)/usr/share/foomatic/db/source
 # exe extention
 ifeq ($(UNAME),OS/2)
-    EXEEXT=.exe
+EXEEXT=.exe
+PATHSEP=;
+# Pathnames for referenced packages...
+FOODB=$(DESTDIR)/@unixroot/usr/share/foomatic/db/source
 else
-    EXEEXT=
+# Pathnames for referenced packages...
+FOODB=$(DESTDIR)/usr/share/foomatic/db/source
+EXEEXT=
+PATHSEP=:
 endif
 
 # User ID's
@@ -910,7 +914,7 @@ install-ppd:
 	#
 	# Install PPD files for CUPS
 	#
-	export PATH=$$PATH:`pwd`:; \
+	export PATH="$$PATH$(PATHSEP)`pwd`$(PATHSEP)"; \
 	if [ -x /usr/sbin/ppdmgr -a -s $(VARPPD)/ppdcache ]; then \
 	    $(INSTALL) $(LPgid) -d $(VARPPD)/user; \
 	    cd PPD; \
@@ -939,7 +943,7 @@ install-ppd:
 	    done; \
 	fi
 	#
-	export PATH=$$PATH:`pwd`:; \
+	export PATH="$$PATH$(PATHSEP)`pwd`$(PATHSEP)"; \
 	if [ -d $(MODEL) ]; then \
 	    rm -f $(MODEL)/KonicaMinolta*; \
 	    cd PPD; \

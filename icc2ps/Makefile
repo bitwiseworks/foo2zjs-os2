@@ -1,7 +1,11 @@
 UNAME := $(shell uname)
 
 PREFIX=	/usr
+ifeq ($(UNAME),OS/2)
+PREFIX=$(DESTDIR)/\@unixroot/usr
+else
 PREFIX=	$(DESTDIR)/usr
+endif
 BIN=	$(PREFIX)/bin
 MANDIR=$(PREFIX)/share/man
 
