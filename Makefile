@@ -19,7 +19,11 @@ VERSION=0.0
 # Installation prefix...
 PREFIX=/usr/local
 PREFIX=/usr
+ifeq ($(UNAME),OS/2)
+PREFIX=$(DESTDIR)/\@unixroot/usr
+else
 PREFIX=$(DESTDIR)/usr
+endif
 
 # Pathnames for this package...
 BIN=$(PREFIX)/bin
