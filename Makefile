@@ -40,6 +40,12 @@ ROOT=root
 
 # Pathnames for referenced packages...
 FOODB=$(DESTDIR)/usr/share/foomatic/db/source
+# exe extention
+ifeq ($(UNAME),OS/2)
+    EXEEXT=.exe
+else
+    EXEEXT=
+endif
 
 # User ID's
 LPuid=-oroot
@@ -61,6 +67,10 @@ ifeq ($(UNAME),SunOS)
     LPuid=-oroot
     LPgid=-glp
     INSTALL=/usr/ucb/install
+endif
+ifeq ($(UNAME),OS/2)
+    LPuid=
+    LPgid=
 endif
 # If we aren't root, don't try to set ownership
 ifneq ($(EUID),0)
@@ -262,18 +272,18 @@ CUPS_GOODAPI := $(shell cups-config --api-version 2>/dev/null | sed "s/1\.[0123]
 # sihpP1005.img sihpP1006.img sihpP1505.img
 
 # Programs and libraries
-PROGS=		foo2zjs zjsdecode arm2hpdl foo2hp foo2xqx xqxdecode
-PROGS+=		foo2lava lavadecode foo2qpdl qpdldecode opldecode
-PROGS+=		foo2oak oakdecode
-PROGS+=		foo2slx slxdecode
-PROGS+=		foo2hiperc hipercdecode
-PROGS+=		foo2hbpl2 hbpldecode
-PROGS+=		gipddecode
-PROGS+=		foo2ddst ddstdecode
+PROGS=		foo2zjs$(EXEEXT) zjsdecode$(EXEEXT) foo2hp$(EXEEXT) foo2xqx$(EXEEXT) xqxdecode$(EXEEXT)
+PROGS+=		foo2lava$(EXEEXT) lavadecode$(EXEEXT) foo2qpdl$(EXEEXT) qpdldecode$(EXEEXT) opldecode$(EXEEXT)
+PROGS+=		foo2oak$(EXEEXT) oakdecode$(EXEEXT)
+PROGS+=		foo2slx$(EXEEXT) slxdecode$(EXEEXT)
+PROGS+=		foo2hiperc$(EXEEXT) hipercdecode$(EXEEXT)
+PROGS+=		foo2hbpl2$(EXEEXT) hbpldecode$(EXEEXT)
+PROGS+=		gipddecode$(EXEEXT)
+PROGS+=		foo2ddst$(EXEEXT) ddstdecode$(EXEEXT)
 ifneq ($(CUPS_SERVERBIN),)
     ifneq ($(CUPS_DEVEL),)
 	ifneq ($(CUPS_GOODAPI),)
-	    PROGS+=	command2foo2lava-pjl
+	    PROGS+=	command2foo2lava-pjl$(EXEEXT)
 	endif
     endif
 endif
@@ -417,6 +427,8 @@ all-test:
 	fi
 	@if [ "`ls $(MACOSX_stdio) 2> /dev/null`" != "" ]; then \
 	    : ; \
+	elif test -f /@unixroot/usr/include/stdio.h; then \
+	    : ; \
 	elif ! test -f /usr/include/stdio.h; then \
 	    echo "      ***"; \
 	    echo "      *** Error: /usr/include/stdio.h is not installed!"; \
@@ -482,34 +494,34 @@ all-done:
 	@echo "yourself."
 
 
-foo2ddst: foo2ddst.o $(LIBJBG)
+foo2ddst$(EXEEXT): foo2ddst.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2ddst.o $(LIBJBG)
 
-foo2hbpl2: foo2hbpl2.o $(LIBJBG)
+foo2hbpl2$(EXEEXT): foo2hbpl2.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2hbpl2.o $(LIBJBG)
 
-foo2hp: foo2hp.o $(LIBJBG)
+foo2hp$(EXEEXT): foo2hp.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2hp.o $(LIBJBG)
 
-foo2hiperc: foo2hiperc.o $(LIBJBG)
+foo2hiperc$(EXEEXT): foo2hiperc.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2hiperc.o $(LIBJBG)
 
-foo2lava: foo2lava.o $(LIBJBG)
+foo2lava$(EXEEXT): foo2lava.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2lava.o $(LIBJBG)
 
-foo2oak: foo2oak.o $(LIBJBG)
+foo2oak$(EXEEXT): foo2oak.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2oak.o $(LIBJBG)
 
-foo2qpdl: foo2qpdl.o $(LIBJBG)
+foo2qpdl$(EXEEXT): foo2qpdl.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2qpdl.o $(LIBJBG)
 
-foo2slx: foo2slx.o $(LIBJBG)
+foo2slx$(EXEEXT): foo2slx.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2slx.o $(LIBJBG)
 
-foo2xqx: foo2xqx.o $(LIBJBG)
+foo2xqx$(EXEEXT): foo2xqx.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2xqx.o $(LIBJBG)
 
-foo2zjs: foo2zjs.o $(LIBJBG)
+foo2zjs$(EXEEXT): foo2zjs.o $(LIBJBG)
 	$(CC) $(CFLAGS) -o $@ foo2zjs.o $(LIBJBG)
 
 
@@ -598,43 +610,43 @@ endif
 ok: ok.o $(LIBJBG)
 	$(CC) $(CFLAGS) ok.o $(LIBJBG) -o $@
 
-ddstdecode: ddstdecode.o $(LIBJBG)
+ddstdecode$(EXEEXT): ddstdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) ddstdecode.o $(LIBJBG) -o $@
 
-gipddecode: gipddecode.o $(LIBJBG)
+gipddecode$(EXEEXT): gipddecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) gipddecode.o $(LIBJBG) -o $@
 
-hbpldecode: hbpldecode.o $(LIBJBG)
+hbpldecode$(EXEEXT): hbpldecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) hbpldecode.o $(LIBJBG) -o $@
 
-hipercdecode: hipercdecode.o $(LIBJBG)
+hipercdecode$(EXEEXT): hipercdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) hipercdecode.o $(LIBJBG) -o $@
 
-lavadecode: lavadecode.o $(LIBJBG)
+lavadecode$(EXEEXT): lavadecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) lavadecode.o $(LIBJBG) -o $@
 
-oakdecode: oakdecode.o $(LIBJBG)
+oakdecode$(EXEEXT): oakdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) -g oakdecode.o $(LIBJBG) -o $@
 
-opldecode: opldecode.o $(LIBJBG)
+opldecode$(EXEEXT): opldecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) -g opldecode.o $(LIBJBG) -o $@
 
-qpdldecode: qpdldecode.o $(LIBJBG)
+qpdldecode$(EXEEXT): qpdldecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) qpdldecode.o $(LIBJBG) -o $@
 
-splcdecode: splcdecode.o $(LIBJBG)
+splcdecode$(EXEEXT): splcdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) splcdecode.o $(LIBJBG) -lz -o $@
 
-slxdecode: slxdecode.o $(LIBJBG)
+slxdecode$(EXEEXT): slxdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) slxdecode.o $(LIBJBG) -o $@
 
-xqxdecode: xqxdecode.o $(LIBJBG)
+xqxdecode$(EXEEXT): xqxdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) xqxdecode.o $(LIBJBG) -o $@
 
-zjsdecode: zjsdecode.o $(LIBJBG)
+zjsdecode$(EXEEXT): zjsdecode.o $(LIBJBG)
 	$(CC) $(CFLAGS) zjsdecode.o $(LIBJBG) -o $@
 
-command2foo2lava-pjl: command2foo2lava-pjl.o
+command2foo2lava-pjl$(EXEEXT): command2foo2lava-pjl.o
 	$(CC) $(CFLAGS) -L/usr/local/lib command2foo2lava-pjl.o -lcups -o $@
 
 command2foo2lava-pjl.o: command2foo2lava-pjl.c

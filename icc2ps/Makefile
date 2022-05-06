@@ -16,11 +16,18 @@ ifeq ($(UNAME),SunOS)
     CC=gcc
 endif
 
+# exe extention
+ifeq ($(UNAME),OS/2)
+    EXEEXT=.exe
+else
+    EXEEXT=
+endif
+
 .SUFFIXES: .1 .1in
 
-all: foo2zjs-icc2ps man
+all: foo2zjs-icc2ps$(EXEEXT) man
 
-foo2zjs-icc2ps: $(SRC) $(LIB)
+foo2zjs-icc2ps$(EXEEXT): $(SRC) $(LIB)
 	$(CC) $(CFLAGS) $(SRC) $(LIB) -lm -o $@
 
 install: all
