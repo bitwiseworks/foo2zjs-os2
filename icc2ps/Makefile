@@ -13,7 +13,11 @@ SRC=	icc2ps.c xgetopt.c
 LIB=	cmscam97.c cmscnvrt.c cmserr.c cmsgamma.c cmsgmt.c cmsintrp.c cmsio1.c \
 	cmslut.c cmsmatsh.c cmsmtrx.c cmsnamed.c cmspack.c cmspcs.c cmsps2.c \
 	cmssamp.c cmswtpnt.c cmsxform.c cmsio0.c cmsvirt.c
+ifeq ($(UNAME),OS/2)
+CFLAGS += -O2 -Wall 
+else
 CFLAGS=	-O3
+endif
 INSTALL=install
 ifeq ($(UNAME),SunOS)
     INSTALL=/usr/ucb/install
